@@ -10,5 +10,16 @@ class Pessoas extends Model
     use HasFactory;
     protected $table = 'pessoas';
 
-    protected $fillable = ['nome', 'dt_Nasc', 'cpf', 'cep', 'rua', 'nº', 'bairro', 'cidade', 'uf', 'foto'];
+    protected $fillable = [
+        'nome', 
+        'dt_Nasc', 
+        'cpf', 
+        'cep', 
+        'rua', 
+        'nº', 
+        'bairro', 
+        'cidade', 
+        'uf', 
+        'foto'
+    ];
 }
