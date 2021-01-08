@@ -8,7 +8,7 @@ use App\Models\Pessoas;
 class PessoasController extends Controller
 {
     private $pessoa;
-    private $totalPage = 16;
+    private $totalPage = 10;
 
     public function __construct(Pessoas $pessoa)
     {
@@ -23,7 +23,7 @@ class PessoasController extends Controller
      */
     public function index()
     {
-        $title = "Lista de Pessoas";
+        $title = 'Lista de Pessoas';
 
         $pessoas = $this->pessoa->paginate($this->totalPage);
         
@@ -50,8 +50,6 @@ class PessoasController extends Controller
      */
     public function store(Request $request)
     {
-        $title = 'Cadastro de Pessoas';
-
         $dataForm = $request->except('_token');
         $dataForm['active'] = (!isset($dataForm['active'])) ? 0 : 1;
 

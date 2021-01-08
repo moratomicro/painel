@@ -1,9 +1,24 @@
 @extends('template/layout')
 
-@section('content')        
-        <div class="table-responsive"
+@section('content')
+        <h1>{{ $title ?? Lista }}</h1>        
+        <div class="table-responsive">
+            <h3>
+                <small>
+                    @if ($pessoas->count() === 1)
+                        Um registro encontrado.
+                    @elseif ($pessoas->count() > 1)
+                        {{ $pessoas->count() }} Pessoas.
+                    @else
+                        Não foram encontrados registros no Banco de Dados.
+                    @endif
+                </small>
+            </h3>
+
+            <hr>
+            @if ($pessoas->count())                
             <table class="table table-bordered">
-                <caption>Lista de pessoas</caption>
+                <caption><a href="{{ url('create') }}">Novo</a></li></caption>
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -17,6 +32,7 @@
                         <th scope="col">CIDADE</th>
                         <th scope="col">UF</th>
                         <th scope="col">FOTO</th>
+                        <th scope="col">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,9 +49,23 @@
                             <td>{{ $pessoa->cidade }}</td>
                             <td>{{ $pessoa->uf }}</td>                    
                             <td>{{ $pessoa->foto }}</td>
+                            <td>
+                                <div class="pull-right">
+                                    <div class="btn-group btn-group-xs">
+                                        <a href="{{ url('edit', $pessoa->id) }}" title="Editar"
+                                        class="btn btn-default">Editar</a>
+                                        <a href="{{ url('destroy', $pessoa->id) }}" title="Remover"
+                                        class="btn btn-default">Remover</a>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+
+            @else
+                <h3>Nenhum registro encontrado.</h3>
+            @endif
         </div>
 @endsection
