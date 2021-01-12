@@ -3,22 +3,22 @@
 @section('content')
         <h1>{{ $title ?? Lista }}</h1>        
         <div class="table-responsive">
-            <h3>
+            <h4 style="text-align: right;">
                 <small>
                     @if ($pessoas->count() === 1)
                         Um registro encontrado.
                     @elseif ($pessoas->count() > 1)
-                        {{ $pessoas->count() }} Pessoas.
+                        {{ $pessoas->count() }} Pessoas cadastradas.
                     @else
                         Não foram encontrados registros no Banco de Dados.
                     @endif
                 </small>
-            </h3>
+            </h4>
 
             <hr>
             @if ($pessoas->count())                
             <table class="table table-bordered">
-                <caption><a href="{{ url('create') }}">Novo</a></li></caption>
+                <caption><a href="{{ route('pessoa.create') }}">Novo</a></li></caption>
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -52,10 +52,12 @@
                             <td>
                                 <div class="pull-right">
                                     <div class="btn-group btn-group-xs">
-                                        <a href="{{ url('edit', $pessoa->id) }}" title="Editar"
-                                        class="btn btn-default">Editar</a>
-                                        <a href="{{ url('destroy', $pessoa->id) }}" title="Remover"
-                                        class="btn btn-default">Remover</a>
+                                        <a href="{{ route('pessoa.show', $pessoa->id) }}" title="Visualizar"
+                                            class="btn btn-success"><span class="glyphicon glyphicon-eye-open"></span>Vizualizar</a>
+                                        <a href="{{ route('pessoa.edit', $pessoa->id) }}" title="Editar"
+                                            class="btn btn-info btn-lg"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
+                                        <a href="{{ route('pessoa.destroy', $pessoa->id) }}" title="Remover"
+                                            class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Remover</a>                                            
                                     </div>
                                 </div>
                             </td>

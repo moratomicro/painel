@@ -39,7 +39,7 @@ class PessoasController extends Controller
     {
         $title = "Cadastro de Pessoas";
 
-        return view('create', compact('title'));
+        return view('create-edit', compact('title'));        
     }
 
     /**
@@ -56,9 +56,9 @@ class PessoasController extends Controller
         $insert = $this->pessoa->create($dataForm);
 
         if ($insert)
-            return redirect()->route('index')->with('success', 'Registro inserido com sucessso!');
+            return redirect()->route('pessoa.index')->with('success', 'Registro inserido com sucessso!');
         else
-            return redirect()->route('create')->with('error', 'Falha ao tentar inserir o registro.');
+            return redirect()->route('pessoa.create')->with('error', 'Falha ao tentar inserir o registro.');
     }
 
     /**
@@ -71,7 +71,7 @@ class PessoasController extends Controller
     {
         $pessoa = $this->pessoa->find($id);
 
-        $title = "Pessoa: {$pessoa->nome}";
+        $title = "Nome: {$pessoa->nome}";
 
         return view('show', compact('pessoa', 'title'));
     }
@@ -89,7 +89,7 @@ class PessoasController extends Controller
 
         $title = "Editar Pessoa: {$pessoa->nome}";
 
-        return view('edit', compact('title', 'pessoa'));
+        return view('create-edit', compact('title', 'pessoa'));
     }
 
     /**
@@ -112,9 +112,9 @@ class PessoasController extends Controller
         
         //Verifica se realmente editou
         if($update)
-            return redirect()->route('index');
+            return redirect()->route('pessoa.index');
         else 
-            return redirect()->route('edit', $id)->with(['errors' => 'Falha ao editar']);
+            return redirect()->route('pessoa.edit', $id)->with(['errors' => 'Falha ao editar']);
     }
 
     /**
@@ -130,8 +130,8 @@ class PessoasController extends Controller
         $delete = $pessoa->delete();
 
         if($delete)
-            return redirect()->route('index');
+            return redirect()->route('pessoa.index');
         else
-            return redirect()->route('show', $id)->with(['errors' => 'Falha ao deletar.']);
+            return redirect()->route('pessoa.show', $id)->with(['errors' => 'Falha ao deletar.']);
     }
 }

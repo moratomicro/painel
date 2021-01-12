@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/index', 'App\Http\Controllers\PessoasController@index');
-Route::get('/create', 'App\Http\Controllers\PessoasController@create');
-Route::get('/show', 'App\Http\Controllers\PessoasController@show');
-Route::get('/destroy', 'App\Http\Controllers\PessoasController@destroy');
+Route::resource('/pessoa', 'App\Http\Controllers\PessoasController');
 
 Route::get('/', function () {
     return view('welcome');
