@@ -48,7 +48,11 @@
                             <td>{{ $pessoa->bairro }}</td>
                             <td>{{ $pessoa->cidade }}</td>
                             <td>{{ $pessoa->uf }}</td>                    
-                            <td>{{ $pessoa->foto }}</td>
+                            <td>
+                                @if ($pessoa->foto)
+                                    <img src="{{ url("storage/{$pessoa->foto}") }}" alt="{{ $pessoa->nome }}" style="max-width: 50px;">
+                                @endif
+                            </td>
                             <td>
                                 <div class="pull-right">
                                     <div class="btn-group btn-group-xs">
@@ -56,8 +60,6 @@
                                             class="btn btn-success"><span class="glyphicon glyphicon-eye-open"></span>Vizualizar</a>
                                         <a href="{{ route('pessoa.edit', $pessoa->id) }}" title="Editar"
                                             class="btn btn-info btn-lg"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
-                                        <a href="{{ route('pessoa.destroy', $pessoa->id) }}" title="Remover"
-                                            class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Remover</a>                                            
                                     </div>
                                 </div>
                             </td>

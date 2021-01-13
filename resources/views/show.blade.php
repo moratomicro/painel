@@ -18,7 +18,11 @@
             <p><b>Bairro: </b>{{$pessoa->bairro}}
             <p><b>Cidade: </b>{{$pessoa->cidade}}
                <b>UF: </b>{{$pessoa->uf}}</p>
-            <p><b>Foto: </b>{{$pessoa->foto}}</p>
+            <p>
+                @if ($pessoa->foto)
+                    <img src="{{ url("storage/{$pessoa->foto}") }}" alt="{{ $pessoa->nome }}" style="max-width: 300px;">
+                @endif
+            </p>
             <hr>
             {!! Form::open(['route' => ['pessoa.destroy', $pessoa->id], 'method' => 'DELETE']) !!}
                 {!! Form::submit("Deletar Paciente: $pessoa->nome", ['class' => 'btn btn-danger']) !!}

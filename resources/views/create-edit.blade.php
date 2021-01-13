@@ -5,7 +5,7 @@
 
     <hr>
     
-    {{Form::open(array('route' => 'pessoa.index'))}}
+    {{Form::open(array('route' => 'pessoa.store', 'enctype' => 'multipart/form-data'))}}
         <div class="form-group">
             {{ Form::label('nome', 'Nome:') }}
             {{ Form::text('nome', null, ['class'=>'form-control', 'rows'=>5]) }}

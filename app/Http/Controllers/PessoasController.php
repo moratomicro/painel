@@ -53,6 +53,13 @@ class PessoasController extends Controller
         $dataForm = $request->except('_token');
         $dataForm['active'] = (!isset($dataForm['active'])) ? 0 : 1;
 
+        if ($request->hasFile('foto') && $request->foto->isValid()) {
+            $fotoPath = $request->foto->store('imgPessoas');
+
+            $dataForm['foto'] = $fotoPath;
+
+        }
+
         $insert = $this->pessoa->create($dataForm);
 
         if ($insert)
@@ -127,11 +134,8 @@ class PessoasController extends Controller
     {
         $pessoa = $this->pessoa->find($id);
 
-        $delete = $pessoa->delete();
+        $pessoa->delete();
 
-        if($delete)
-            return redirect()->route('pessoa.index');
-        else
-            return redirect()->route('pessoa.show', $id)->with(['errors' => 'Falha ao deletar.']);
+        return redirect()->route('pessoa.index')->with('sucesso', 'Cadastro excluído com sucesso.');        
     }
 }
