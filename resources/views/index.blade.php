@@ -59,7 +59,7 @@
                                         <a href="{{ route('pessoa.show', $pessoa->id) }}" title="Visualizar"
                                             class="btn btn-success"><span class="glyphicon glyphicon-eye-open"></span>Vizualizar</a>
                                         <a href="{{ route('pessoa.edit', $pessoa->id) }}" title="Editar"
-                                            class="btn btn-info btn-lg"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
+                                            class="actions edit btn btn-info btn-lg"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
                                     </div>
                                 </div>
                             </td>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pessoas;
+use Illuminate\Support\Facades\Storage;
 
 class PessoasController extends Controller
 {
@@ -57,7 +58,6 @@ class PessoasController extends Controller
             $fotoPath = $request->foto->store('imgPessoas');
 
             $dataForm['foto'] = $fotoPath;
-
         }
 
         $insert = $this->pessoa->create($dataForm);
@@ -94,7 +94,7 @@ class PessoasController extends Controller
         //Recupera a pessoa pelo seu id
         $pessoa = $this->pessoa->find($id);
 
-        $title = "Editar Pessoa: {$pessoa->nome}";
+        $title = "Editar: {$pessoa->nome}";
 
         return view('create-edit', compact('title', 'pessoa'));
     }
@@ -108,20 +108,25 @@ class PessoasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //Recupera todos os dados do formulário
+        $pessoa = $this->pessoa->find($id);
+
         $dataForm = $request->all();
         
-        //Recupera o item para editar
-        $pessoa = $this->pessoa->find($id);
-        
-        //Altera os itens
+        if ($request->hasFile('foto') && $request->foto->isValid()) {
+            if ($pessoa->foto && Storage::exists($pessoa->foto)) {
+                Storage::delete($pessoa->foto);
+            }
+            
+            $pessoaPath = $request->foto->store('imgPessoas');
+            $dataForm['foto'] = $pessoaPath;
+        }
+                
         $update = $pessoa->update($dataForm);
-        
-        //Verifica se realmente editou
+                
         if($update)
             return redirect()->route('pessoa.index');
         else 
-            return redirect()->route('pessoa.edit', $id)->with(['errors' => 'Falha ao editar']);
+            return redirect()->back();
     }
 
     /**
@@ -133,6 +138,12 @@ class PessoasController extends Controller
     public function destroy($id)
     {
         $pessoa = $this->pessoa->find($id);
+        if (!$pessoa)
+            return redirect()->back();
+
+        if ($pessoa->foto && Storage::exists($pessoa->foto)) {
+            Storage::delete($pessoa->foto);
+        }
 
         $pessoa->delete();
 
