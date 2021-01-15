@@ -56,7 +56,6 @@ class PessoasController extends Controller
 
         if ($request->hasFile('foto') && $request->foto->isValid()) {
             $fotoPath = $request->foto->store('imgPessoas');
-
             $dataForm['foto'] = $fotoPath;
         }
 
@@ -113,12 +112,13 @@ class PessoasController extends Controller
         $dataForm = $request->all();
         
         if ($request->hasFile('foto') && $request->foto->isValid()) {
+            
             if ($pessoa->foto && Storage::exists($pessoa->foto)) {
                 Storage::delete($pessoa->foto);
             }
             
-            $pessoaPath = $request->foto->store('imgPessoas');
-            $dataForm['foto'] = $pessoaPath;
+            $fotoPath = $request->foto->store('imgPessoas');
+            $dataForm['foto'] = $fotoPath;
         }
                 
         $update = $pessoa->update($dataForm);
